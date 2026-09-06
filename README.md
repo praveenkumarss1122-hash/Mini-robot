@@ -1,23 +1,14 @@
 # Mini-robot
-<!DOCTYPE html><html lang="te"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>Mini Robot</title><style>body{background:#000;color:#fff;text-align:center;font-family:sans-serif;padding:20px}#r{font-size:90px;animation:p 2s infinite}@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}button{padding:14px 26px;margin:8px;border-radius:30px;border:0;background:#FF0066;color:#fff;font-size:17px}#off{display:none;position:fixed;inset:0;background:#000;z-index:9999;padding-top:40vh;font-size:24px}</style><link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWluaSBSb2JvdCIsInNob3J0X25hbWUiOiJNaW5pUm9ib3QiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzAwMDAwMCIsInRoZW1lX2NvbG9yIjoiI0ZGMDA2NiJ9"></head><body>
-<div id="off" onclick="wake()">Tap to Wake Up<br><small>Say: "On Chey"</small></div>
-<div id="r">🤖</div><h2>Mini Robot - Sweet Voice</h2><p id="s">Hi Parveen! Nenu ready!</p><p id="h" style="color:#FF99CC"></p>
-<button onclick="listen()">🎤 Matladu</button><button onclick="photo()">📸 Photo</button><button onclick="sOff()">🌙 Screen Off</button>
-<video id="v" autoplay playsinline style="width:90%;border-radius:15px;margin-top:12px"></video><canvas id="c" style="display:none"></canvas>
-<script>
-let voice;function loadV(){let vs=speechSynthesis.getVoices();voice=vs.find(x=>x.name.includes("Female"))||vs[0]}speechSynthesis.onvoiceschanged=loadV;loadV();
-function sp(t){let u=new SpeechSynthesisUtterance(t);if(voice)u.voice=voice;u.pitch=1.35;u.rate=0.9;speechSynthesis.speak(u);s.innerText=t}
-function listen(){let R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){alert("Chrome lo open chey");return}let r=new R();r.lang='te-IN';r.start();s.innerText="Vintunna...🎧";r.onresult=e=>{let cmd=e.results[0][0].transcript.toLowerCase();h.innerText="Nuvvu: "+cmd;doCmd(cmd)}}
-function doCmd(c){
- if(c.includes("screen off")||c.includes("nidra")||c.includes("sleep")){sOff();sp("Good night Parveen, screen off chestunna");return}
- if(c.includes("on chey")||c.includes("wake")){wake();sp("Welcome back boss!");return}
- if(c.includes("photo")||c.includes("camera")){photo();return}
- if(c.includes("youtube")){let q=c.replace("youtube","").trim();sp(q+" YouTube lo chupistunna");open("https://www.youtube.com/results?search_query="+q);return}
- if(c.includes("search")||c.includes("google")){let q=c.replace("search","").replace("google","").trim();sp(q+" search chestunna");open("https://www.google.com/search?q="+q);return}
- if(c.includes("call")){let n=c.replace(/\D/g,'');if(n.length>=10){sp(n+" ki call chestunna");location.href="tel:"+n}else sp("Number cheppu Parveen");return}
- sp("Ok Parveen, "+c+" ani annav, nenu gurtunchukunna!")
-}
-async function photo(){try{let st=await navigator.mediaDevices.getUserMedia({video:true});v.srcObject=st;setTimeout(()=>{c.width=640;c.height=480;c.getContext('2d').drawImage(v,0,0);let a=document.createElement('a');a.download='robot-photo.png';a.href=c.toDataURL();a.click();sp("Photo teesa!")},1800)}catch{sp("Camera permission ivvu")}}
-function sOff(){off.style.display="block"}function wake(){off.style.display="none";sp("Screen on chesa!")}
-window.onload=()=>{setTimeout(()=>sp("Hi Parveen! Nenu nee Mini Robot ni, matladu!"),500)}
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Robot 3.0</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
+.top-bar{width:100%;max-width:400px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.icon-btn{background:#1a1a1a;border:1px solid #333;width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.robot-face{font-size:85px;filter:drop-shadow(0 0 20px #ff006a);animation:float 3s ease-in-out infinite;transition:0.3s}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}.talking{animation:talk 0.2s infinite alternate}@keyframes talk{0%{transform:scale(1)}100%{transform:scale(1.12)}}h1{font-size:24px;margin:5px;background:linear-gradient(90deg,#ff006a,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}#status{color:#aaa;font-size:14px;min-height:18px}#chatBox{width:100%;max-width:400px;height:190px;background:#111;border:1px solid #2a2a2a;border-radius:15px;margin:12px 0;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}.msg{padding:8px 11px;border-radius:15px;max-width:82%;font-size:13.5px;line-height:1.35}.user{align-self:flex-end;background:#ff006a;color:white;border-bottom-right-radius:3px}.bot{align-self:flex-start;background:#222;border:1px solid #333}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:400px}.btn{background:#ff006a;color:white;border:none;padding:12px;border-radius:22px;font-size:13px;font-weight:700;cursor:pointer}.btn.secondary{background:#181818;border:1px solid #ff006a55}.btn.full{grid-column:span 2;background:linear-gradient(90deg,#ff006a,#ff3d8f)}.pulse{animation:pulse 1.5s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,106,.7)}70%{box-shadow:0 0 0 9px rgba(255,0,106,0)}100%{box-shadow:0 0 0 0 rgba(255,0,106,0)}}#settingsModal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}#settingsBox{width:100%;max-width:360px;background:#161616;border:1px solid #333;border-radius:20px;padding:18px}.setting-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}.setting-row label{font-size:14px;color:#ccc}select{padding:8px 12px;border-radius:10px;background:#222;color:#fff;border:1px solid #444;font-size:14px}.switch{width:50px;height:26px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}.switch.on{background:#ff006a}.knob{width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}.switch.on .knob{left:26px}#wave{width:100%;max-width:400px;height:30px;display:flex;gap:3px;justify-content:center;align-items:center;display:none;margin:6px 0}.bar{width:4px;height:8px;background:#ff006a;border-radius:2px;animation:wave 0.5s infinite}@keyframes wave{0%,100%{height:8px}50%{height:28px}}.bar:nth-child(2){animation-delay:.1s}.bar:nth-child(3){animation-delay:.2s}.bar:nth-child(4){animation-delay:.3s}
+</style>
+</head>
+<body>
+<div class="top-bar">
