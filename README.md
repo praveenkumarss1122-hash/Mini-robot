@@ -1,14 +1,59 @@
 # Mini-robot
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini Robot 3.0</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
-.top-bar{width:100%;max-width:400px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.icon-btn{background:#1a1a1a;border:1px solid #333;width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.robot-face{font-size:85px;filter:drop-shadow(0 0 20px #ff006a);animation:float 3s ease-in-out infinite;transition:0.3s}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}.talking{animation:talk 0.2s infinite alternate}@keyframes talk{0%{transform:scale(1)}100%{transform:scale(1.12)}}h1{font-size:24px;margin:5px;background:linear-gradient(90deg,#ff006a,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}#status{color:#aaa;font-size:14px;min-height:18px}#chatBox{width:100%;max-width:400px;height:190px;background:#111;border:1px solid #2a2a2a;border-radius:15px;margin:12px 0;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}.msg{padding:8px 11px;border-radius:15px;max-width:82%;font-size:13.5px;line-height:1.35}.user{align-self:flex-end;background:#ff006a;color:white;border-bottom-right-radius:3px}.bot{align-self:flex-start;background:#222;border:1px solid #333}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:400px}.btn{background:#ff006a;color:white;border:none;padding:12px;border-radius:22px;font-size:13px;font-weight:700;cursor:pointer}.btn.secondary{background:#181818;border:1px solid #ff006a55}.btn.full{grid-column:span 2;background:linear-gradient(90deg,#ff006a,#ff3d8f)}.pulse{animation:pulse 1.5s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,106,.7)}70%{box-shadow:0 0 0 9px rgba(255,0,106,0)}100%{box-shadow:0 0 0 0 rgba(255,0,106,0)}}#settingsModal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}#settingsBox{width:100%;max-width:360px;background:#161616;border:1px solid #333;border-radius:20px;padding:18px}.setting-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}.setting-row label{font-size:14px;color:#ccc}select{padding:8px 12px;border-radius:10px;background:#222;color:#fff;border:1px solid #444;font-size:14px}.switch{width:50px;height:26px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}.switch.on{background:#ff006a}.knob{width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}.switch.on .knob{left:26px}#wave{width:100%;max-width:400px;height:30px;display:flex;gap:3px;justify-content:center;align-items:center;display:none;margin:6px 0}.bar{width:4px;height:8px;background:#ff006a;border-radius:2px;animation:wave 0.5s infinite}@keyframes wave{0%,100%{height:8px}50%{height:28px}}.bar:nth-child(2){animation-delay:.1s}.bar:nth-child(3){animation-delay:.2s}.bar:nth-child(4){animation-delay:.3s}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
+.top-bar{width:100%;max-width:400px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.icon-btn{background:#1a1a1a;border:1px solid #333;width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.robot-face{font-size:85px;filter:drop-shadow(0 0 20px #ff006a);animation:float 3s ease-in-out infinite;transition:0.3s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.talking{animation:talk 0.2s infinite alternate}
+@keyframes talk{0%{transform:scale(1)}100%{transform:scale(1.12)}}
+h1{font-size:24px;margin:5px;background:linear-gradient(90deg,#ff006a,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#status{color:#aaa;font-size:14px;min-height:18px}
+#chatBox{width:100%;max-width:400px;height:190px;background:#111;border:1px solid #2a2a2a;border-radius:15px;margin:12px 0;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.msg{padding:8px 11px;border-radius:15px;max-width:82%;font-size:13.5px;line-height:1.35}
+.user{align-self:flex-end;background:#ff006a;color:white;border-bottom-right-radius:3px}
+.bot{align-self:flex-start;background:#222;border:1px solid #333}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:400px}
+.btn{background:#ff006a;color:white;border:none;padding:12px;border-radius:22px;font-size:13px;font-weight:700;cursor:pointer}
+.btn.secondary{background:#181818;border:1px solid #ff006a55}
+.btn.full{grid-column:span 2;background:linear-gradient(90deg,#ff006a,#ff3d8f)}
+.pulse{animation:pulse 1.5s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,106,.7)}70%{box-shadow:0 0 0 9px rgba(255,0,106,0)}100%{box-shadow:0 0 0 0 rgba(255,0,106,0)}}
+#settingsModal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+#settingsBox{width:100%;max-width:360px;background:#161616;border:1px solid #333;border-radius:20px;padding:18px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+.setting-row label{font-size:14px;color:#ccc}
+select{padding:8px 12px;border-radius:10px;background:#222;color:#fff;border:1px solid #444;font-size:14px}
+.switch{width:50px;height:26px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}
+.switch.on{background:#ff006a}
+.knob{width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:0.3s}
+.switch.on.knob{left:26px}
+#wave{width:100%;max-width:400px;height:30px;display:flex;gap:3px;justify-content:center;align-items:center;display:none;margin:6px 0}
+.bar{width:4px;height:8px;background:#ff006a;border-radius:2px;animation:wave 0.5s infinite}
+@keyframes wave{0%,100%{height:8px}50%{height:28px}}
 </style>
 </head>
 <body>
-<div class="top-bar">
+<div class="top-bar"><button class="icon-btn" onclick="openSettings()">⚙️</button><div style="font-size:12px;color:#666" id="voiceInfo">🎤 Female • Telugu</div><button class="icon-btn" onclick="clearChat()">🗑️</button></div>
+<div class="robot-face" id="robot">🤖</div><h1>Mini Robot 3.0</h1><div id="status">Parveen, settings marchukovachu! ⚙️</div><div id="wave"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+<div id="chatBox"><div class="msg bot">Hey Parveen! 😍 3.0 vachesa! Paine ⚙️ click chesi voice marchuko - Male/Female, Telugu/English!</div></div>
+<div class="buttons"><button class="btn full pulse" id="talkBtn" onclick="startListening()">🎤 Matladu Parveen</button><button class="btn" onclick="quick('hello')">👋 Hello</button><button class="btn" onclick="quick('joke')">😂 Joke</button><button class="btn secondary" onclick="quick('motivation')">🔥 Motivation</button><button class="btn secondary" onclick="quick('time')">⏰ Time</button><button class="btn secondary" onclick="quick('love')">❤️ Love</button><button class="btn secondary" onclick="quick('song')">🎵 Song</button></div>
+<div id="settingsModal" onclick="if(event.target==this)closeSettings()"><div id="settingsBox"><h3>⚙️ Settings</h3><div class="setting-row"><label>🗣️ Voice Type</label><select id="voiceType" onchange="saveSettings()"><option value="female">Female 👩 Sweet</option><option value="male">Male 👨 Mass</option></select></div><div class="setting-row"><label>🌐 Language</label><select id="langType" onchange="saveSettings()"><option value="te">Telugu తెలుగు</option><option value="en">English</option><option value="mix">Mix</option></select></div><div class="setting-row"><label>🌙 Screen</label><div class="switch" id="screenSwitch" onclick="toggleScreen()"><div class="knob"></div></div></div><div class="setting-row"><label>🤖 Mood</label><select id="mood" onchange="saveSettings()"><option value="friendly">Friendly 😊</option><option value="flirty">Flirty 😜</option><option value="funny">Funny 😂</option><option value="mass">Mass 😎</option></select></div><button class="btn full" style="margin-top:12px" onclick="closeSettings()">✅ Save & Close</button></div></div>
+<script>
+let settings={voice:'female',lang:'te',mood:'friendly',screenOff:false};let recognition;const chatBox=document.getElementById('chatBox'),statusEl=document.getElementById('status'),robot=document.getElementById('robot'),wave=document.getElementById('wave');
+function loadSettings(){const s=localStorage.getItem('robot3');if(s){settings=JSON.parse(s);document.getElementById('voiceType').value=settings.voice;document.getElementById('langType').value=settings.lang;document.getElementById('mood').value=settings.mood;}updateVoiceInfo();}
+function saveSettings(){settings.voice=document.getElementById('voiceType').value;settings.lang=document.getElementById('langType').value;settings.mood=document.getElementById('mood').value;localStorage.setItem('robot3',JSON.stringify(settings));updateVoiceInfo();speak(getByLang('settingsSaved'));}
+function updateVoiceInfo(){const v=settings.voice==='female'?'Female 👩':'Male 👨';const l=settings.lang==='te'?'Telugu':settings.lang==='en'?'English':'Mix';document.getElementById('voiceInfo').textContent=`🎤 ${v} • ${l}`;}
+function openSettings(){document.getElementById('settingsModal').style.display='flex';}function closeSettings(){document.getElementById('settingsModal').style.display='none';}function clearChat(){chatBox.innerHTML='<div class=msg bot>Chat clear chesa! 😊</div>';}
+function addMsg(t,w){const d=document.createElement('div');d.className='msg '+w;d.textContent=t;chatBox.appendChild(d);chatBox.scrollTop=chatBox.scrollHeight;}
+const replies={te:{hello:['Hey Parveen! Ela unnav ra! 😎','Oyy hero!'],settingsSaved:'Settings save chesa!',bye:'Bye Parveen!',thanks:'Welcome ra!'},en:{hello:['Hey Parveen! Whats up! 😎','Hello hero!'],settingsSaved:'Settings saved!',bye:'Bye!',thanks:'Welcome!'},mix:{hello:['Hey Parveen! Ela unnav bro? 😎','Oyy Parveen!'],settingsSaved:'Settings save chesa! New style!',bye:'Bye Parveen!',thanks:'Welcome!'}};
+const jokesTe=["Circuit heat ekkindi! 😂🔥","Mee andam gurinchi search chesa, result raaledu! 😂"];const jokesEn=["Why robot go to school? 😂","You are like WiFi! 😜"];
+function getByLang(t){const lang=settings.lang;const arr=replies[lang][t]||replies['mix'][t];if(Array.isArray(arr))return arr[Math.floor(Math.random()*arr.length)];return arr;}
+function speak(text){if(settings.screenOff)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=settings.lang==='en'?'en-IN':'te-IN';u.rate=settings.voice==='female'?0.95:0.9;
